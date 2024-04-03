@@ -3,13 +3,40 @@
   "type": "module",
   "version": "0.0.0",
   "description": "CLI tool leveraging GenAI to generate commands based on user prompts.",
+  "author": "Luis Emidio",
+  "license": "MIT",
+  "homepage": "https://github.com/neogaialab/strigi#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/neogaialab/strigi.git"
+  },
+  "bugs": {
+    "url": "https://github.com/neogaialab/strigi/issues"
+  },
+  "keywords": [
+    "cli",
+    "ai",
+    "prompt",
+    "command",
+    "generation",
+    "gemini"
+  ],
   "module": "src/main.ts",
+  "bin": {
+    "s": "./dist/s"
+  },
+  "files": [
+    "CHANGELOG.md",
+    "CONTRIBUTING.md",
+    "dist"
+  ],
   "scripts": {
     "start": "bun .",
     "dev": "bun --watch .",
     "build": "bun build ./src/main.ts --outfile dist/s --compile --minify --sourcemap",
     "lint": "eslint .",
-    "lint:fix": "eslint . --fix"
+    "lint:fix": "eslint . --fix",
+    "release": "release-it"
   },
   "peerDependencies": {
     "typescript": "^5.0.0"
@@ -24,9 +51,11 @@
   },
   "devDependencies": {
     "@antfu/eslint-config": "^2.12.1",
+    "@release-it/keep-a-changelog": "^5.0.0",
     "@types/bun": "latest",
     "@types/figlet": "^1.5.8",
     "@types/inquirer": "^9.0.7",
-    "eslint": "^8.57.0"
+    "eslint": "^8.57.0",
+    "release-it": "^17.1.1"
   }
 }

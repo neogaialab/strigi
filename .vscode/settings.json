@@ -3,7 +3,7 @@
   "explorer.fileNesting.expand": false,
   "explorer.fileNesting.patterns": {
     "package.json": "bun.lockb, .gitignore, tsconfig.json, *.d.ts, .release-it.json, eslint.config.*",
-    "README.md": "CHANGELOG*, LICENSE",
+    "README.md": "CHANGELOG*, LICENSE, CONTRIBUTING*",
     ".env": ".env.*"
   },
   "editor.tabSize": 2,
