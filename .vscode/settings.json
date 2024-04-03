@@ -1,0 +1,11 @@
+{
+  "explorer.fileNesting.enabled": true,
+  "explorer.fileNesting.expand": false,
+  "explorer.fileNesting.patterns": {
+    "package.json": "bun.lockb, pnpm-lock.yaml, .gitignore, tsconfig.json, *.d.ts, .release-it.json, eslint.config.js",
+    "README.md": "CHANGELOG*",
+    "docker-compose.yml": "wrangler.*, .env*, .dev.vars, public_keys.*, drizzle.config.*"
+  },
+  "editor.tabSize": 2,
+  "typescript.tsdk": "node_modules/typescript/lib",
+}

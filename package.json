@@ -1,0 +1,25 @@
+{
+  "dependencies": {
+    "@google/generative-ai": "^0.3.1",
+    "clipanion": "^4.0.0-rc.3",
+    "figlet": "^1.7.0"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "@types/figlet": "^1.5.8"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "name": "strigi",
+  "version": "0.0.0",
+  "description": "CLI tool leveraging GenAI to generate commands based on user prompts.",
+  "module": "src/main.ts",
+  "type": "module",
+  "scripts": {
+    "start": "bun .",
+    "dev": "bun --watch .",
+    "build": "bun build ./src/main.ts --outfile dist/s --compile",
+    "preview": "bun build ./src/main.ts --outfile dist/s --compile --minify --sourcemap"
+  }
+}
