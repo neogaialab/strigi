@@ -22,13 +22,13 @@ async function generateCommand(query: string) {
     ## Output Format
 
     {
-      command: string
+      "command": string
     }
 
     ## Output Example
 
     {
-      command: "git commit --amend"
+      "command": "git commit --amend"
     }
   `
 
