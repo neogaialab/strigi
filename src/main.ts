@@ -2,6 +2,9 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 import { Builtins, Cli } from 'clipanion';
 import pkg from '../package.json';
 import MainCommand from "./commands/MainCommand";
+import { PolyfillTextDecoderStream } from "./polyfills/TextDecoderStream";
+
+(globalThis as any).TextDecoderStream = PolyfillTextDecoderStream
 
 const genAI = new GoogleGenerativeAI(Bun.env.GEMINI_API_KEY);
 export const gemini = genAI.getGenerativeModel({ model: "gemini-pro" });

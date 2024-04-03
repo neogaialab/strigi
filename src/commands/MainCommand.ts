@@ -1,10 +1,11 @@
+import { confirm, select } from '@inquirer/prompts';
+import chalk from "chalk";
+import c from "chalk-template";
 import { Command, Option } from "clipanion";
 import pkg from '../../package.json';
-import generateCommand, { type CommandGeneration } from "../services/generateCommand";
-import { select, confirm } from '@inquirer/prompts';
-import c from "chalk-template";
-import explainCommand from "../services/explainCommand";
-import chalk from "chalk";
+import { explainCommandStream } from "../services/explainCommand";
+import generateCommand from "../services/generateCommand";
+import ora from 'ora';
 
 export default class MainCommand extends Command {
   query = Option.Rest({ name: "query", required: 1 })
@@ -74,10 +75,23 @@ export default class MainCommand extends Command {
     }
 
     const explain = async () => {
-      const explanation = await explainCommand(query, cmd);
-      this.explanation = explanation;
+      const spinner = ora().start();
 
-      this.context.stdout.write(`\n${explanation}\n\n`)
+      const explanationStream = await explainCommandStream(query, cmd);
+      let explanation = '';
+      
+      spinner.stop()
+
+      this.context.stdout.write(`\n`)
+
+      for await (const chunk of explanationStream) {
+        const chunkText = chunk.text();
+        this.context.stdout.write(chunkText)
+        explanation += chunkText;
+      }
+
+      this.context.stdout.write(`\n\n`)
+      this.explanation = explanation;
 
       await this.respond(query, cmd)
     }
@@ -94,7 +108,11 @@ export default class MainCommand extends Command {
 
   async execute() {
     const query = this.query.join(" ");
-    const generation = await generateCommand(query);
+
+    const spinner = ora().start();
+    
+    const generation = await generateCommand(query)
+    spinner.stop();
 
     this.respond(query, generation.cmd)
   }

@@ -4,7 +4,8 @@
 
 ### Added
 
-- Add main command
-- Add run action
-- Add cancel action
-- Add explanation for the generated command
+- Added main command
+- Added run action
+- Added cancel action
+- Added explanation for the generated command
+- Added explanation streaming
