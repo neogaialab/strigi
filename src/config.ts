@@ -9,7 +9,7 @@ export const DEFAULT_CONFIG: Config = {
   geminiApiKey: null
 }
 
-const configDirPath = Bun.env.S_CONFIG_DIR_PATH || join(os.homedir(), './config/strigi');
+const configDirPath = Bun.env.S_CONFIG_DIR_PATH || join(os.homedir(), './.config/strigi');
 const configPath = join(configDirPath, 'config.json')
 const file = Bun.file(configPath);
 

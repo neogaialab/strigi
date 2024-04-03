@@ -8,6 +8,8 @@ import { getGemini } from '../gemini';
 import { explainCommandStream } from "../services/explainCommand";
 import generateCommand from "../services/generateCommand";
 
+type Actions = 'run' | 'cancel' | 'explain'
+
 export default class MainCommand extends Command {
   static usage = Command.Usage({
     description: pkg.description
@@ -17,10 +19,12 @@ export default class MainCommand extends Command {
 
   explanation: string | null = null
 
-  async respond(query: string, cmd: string) {
-    this.context.stdout.write(chalk.blue(`${cmd}\n\n`));
+  async respond(query: string, cmd: string, options?: { refreshCmd: boolean }) {
+    if (options?.refreshCmd) {
+      this.context.stdout.write(chalk.blue(`${cmd}\n\n`));
+    }
 
-    const action = await select<'run' | 'cancel' | 'explain'>({
+    const action = await select<Actions>({
       message: "",
       choices: [
         {
@@ -80,7 +84,7 @@ export default class MainCommand extends Command {
 
       const explanationStream = await explainCommandStream(query, cmd);
       let explanation = '';
-      
+
       spinner.stop()
 
       this.context.stdout.write(`\n`)
@@ -94,7 +98,7 @@ export default class MainCommand extends Command {
       this.context.stdout.write(`\n\n`)
       this.explanation = explanation;
 
-      await this.respond(query, cmd)
+      await this.respond(query, cmd, { refreshCmd: true });
     }
 
     const actions: Record<typeof action, () => Promise<void> | void> = {
@@ -115,13 +119,24 @@ export default class MainCommand extends Command {
       return;
     }
 
-    const query = this.query.join(" ");
-
     const spinner = ora().start();
-    
-    const generation = await generateCommand(query)
+
+    const query = this.query.join(" ");
+    const cmdStream = await generateCommand(query)
     spinner.stop();
 
-    this.respond(query, generation.cmd)
+    let cmd = '';
+
+    this.context.stdout.write(`\n`)
+
+    for await (const chunk of cmdStream) {
+      const chunkText = chunk.text();
+      this.context.stdout.write(chunkText)
+      cmd += chunkText;
+    }
+
+    this.context.stdout.write(`\n\n`)
+
+    this.respond(query, cmd)
   }
 }

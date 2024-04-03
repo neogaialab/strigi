@@ -1,14 +1,10 @@
 import { getGemini } from "../gemini";
 
-export type CommandGeneration = {
-  cmd: string
-};
-
 async function generateCommand(query: string) {
   const gemini = getGemini()
 
   const prompt = `
-    You are a CLI command generator. You are expected to generate a command from user query (input). Additionally, you need to provide the explanation for that command.
+    You are a CLI command generator. You are expected to generate a command from user query (input).
 
     ## Input
 
@@ -18,28 +14,16 @@ async function generateCommand(query: string) {
 
     ## Output Criteria
 
-    - A complete valid JSON
-    - Follow exactly the output format
-
-    ## Output Format
-
-    {
-      "cmd": string
-    }
+    - A complete valid CLI command
+    - A complete plain text
 
     ## Output Example
 
-    {
-      "cmd": "git commit --amend"
-    }
+    git commit --amend
   `
 
-  const result = await gemini.generateContent(prompt);
-  const response = await result.response;
-  const text = response.text();
-
-  const data = JSON.parse(text) as CommandGeneration
-  return data;
+  const result = await gemini.generateContentStream(prompt);
+  return result.stream;
 }
 
 export default generateCommand;
