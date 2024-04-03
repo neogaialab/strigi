@@ -1,6 +1,8 @@
-import { gemini } from "../main";
+import { getGemini } from "../gemini";
 
 export async function explainCommandStream(query: string, cmd: string) {
+  const gemini = getGemini()
+  
   const prompt = `
     You are a CLI command generator. You are expected to explain a command that you generated based on user's query.
 

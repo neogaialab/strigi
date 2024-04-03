@@ -1,13 +1,12 @@
-import { GoogleGenerativeAI } from "@google/generative-ai";
+import "./polyfills";
 import { Builtins, Cli } from 'clipanion';
 import pkg from '../package.json';
 import MainCommand from "./commands/MainCommand";
-import { PolyfillTextDecoderStream } from "./polyfills/TextDecoderStream";
+import { initConfig } from "./config";
+import AuthCommand from "./commands/AuthCommand";
+import LogoutCommand from "./commands/LogoutCommand";
 
-(globalThis as any).TextDecoderStream = PolyfillTextDecoderStream
-
-const genAI = new GoogleGenerativeAI(Bun.env.GEMINI_API_KEY);
-export const gemini = genAI.getGenerativeModel({ model: "gemini-pro" });
+await initConfig();
 
 const [node, app, ...args] = process.argv;
 
@@ -19,4 +18,6 @@ const cli = new Cli({
 cli.register(Builtins.HelpCommand);
 cli.register(Builtins.VersionCommand);
 cli.register(MainCommand)
+cli.register(AuthCommand)
+cli.register(LogoutCommand)
 cli.runExit(args);

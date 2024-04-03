@@ -1,10 +1,12 @@
-import { gemini } from "../main";
+import { getGemini } from "../gemini";
 
 export type CommandGeneration = {
   cmd: string
 };
 
 async function generateCommand(query: string) {
+  const gemini = getGemini()
+
   const prompt = `
     You are a CLI command generator. You are expected to generate a command from user query (input). Additionally, you need to provide the explanation for that command.
 

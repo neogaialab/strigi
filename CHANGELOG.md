@@ -9,3 +9,4 @@
 - Added cancel action
 - Added explanation for the generated command
 - Added explanation streaming
+- Added authentication with API key setting

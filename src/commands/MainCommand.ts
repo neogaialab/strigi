@@ -2,17 +2,18 @@ import { confirm, select } from '@inquirer/prompts';
 import chalk from "chalk";
 import c from "chalk-template";
 import { Command, Option } from "clipanion";
+import ora from 'ora';
 import pkg from '../../package.json';
+import { getGemini } from '../gemini';
 import { explainCommandStream } from "../services/explainCommand";
 import generateCommand from "../services/generateCommand";
-import ora from 'ora';
 
 export default class MainCommand extends Command {
-  query = Option.Rest({ name: "query", required: 1 })
-
   static usage = Command.Usage({
     description: pkg.description
   })
+
+  query = Option.Rest({ name: "query", required: 1 })
 
   explanation: string | null = null
 
@@ -107,6 +108,13 @@ export default class MainCommand extends Command {
   }
 
   async execute() {
+    try {
+      getGemini()
+    } catch (e) {
+      this.context.stdout.write(c`{red Gemini API key not set.}\n`)
+      return;
+    }
+
     const query = this.query.join(" ");
 
     const spinner = ora().start();
