@@ -1,6 +1,6 @@
 import { getGemini } from "../gemini";
 
-async function generateCommand(query: string) {
+export async function generateCommandStream(query: string) {
   const gemini = getGemini()
 
   const prompt = `
@@ -25,5 +25,3 @@ async function generateCommand(query: string) {
   const result = await gemini.generateContentStream(prompt);
   return result.stream;
 }
-
-export default generateCommand;

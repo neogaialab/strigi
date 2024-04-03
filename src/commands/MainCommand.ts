@@ -1,4 +1,4 @@
-import { confirm, select } from '@inquirer/prompts';
+import { confirm, input, select } from '@inquirer/prompts';
 import chalk from "chalk";
 import c from "chalk-template";
 import { Command, Option } from "clipanion";
@@ -6,9 +6,11 @@ import ora from 'ora';
 import pkg from '../../package.json';
 import { getGemini } from '../gemini';
 import { explainCommandStream } from "../services/explainCommand";
-import generateCommand from "../services/generateCommand";
+import { generateCommandStream } from "../services/generateCommand";
+import type { EnhancedGenerateContentResponse } from '@google/generative-ai';
+import { reviseCommandStream } from '../services/reviseCommand';
 
-type Actions = 'run' | 'cancel' | 'explain'
+type Actions = 'run' | 'cancel' | 'explain' | 'revise';
 
 export default class MainCommand extends Command {
   static usage = Command.Usage({
@@ -18,6 +20,21 @@ export default class MainCommand extends Command {
   query = Option.Rest({ name: "query", required: 1 })
 
   explanation: string | null = null
+
+  async stream(stream: AsyncGenerator<EnhancedGenerateContentResponse>, cb?: (chunk: string) => string) {
+    let text = "";
+    this.context.stdout.write(cb ? cb('\n') : '\n')
+
+    for await (const chunk of stream) {
+      const chunkText = chunk.text();
+      this.context.stdout.write(cb ? cb(chunkText) : chunkText)
+      text += chunkText;
+    }
+
+    this.context.stdout.write(cb ? cb('\n\n') : '\n\n')
+
+    return text;
+  }
 
   async respond(query: string, cmd: string, options?: { refreshCmd: boolean }) {
     if (options?.refreshCmd) {
@@ -32,13 +49,17 @@ export default class MainCommand extends Command {
           value: 'run'
         },
         {
-          name: 'Cancel',
-          value: 'cancel',
+          name: 'Revise',
+          value: 'revise',
         },
         {
           name: !this.explanation ? 'Explain' : 'Explain again',
           value: 'explain',
-        }
+        },
+        {
+          name: 'Cancel',
+          value: 'cancel',
+        },
       ]
     })
 
@@ -83,28 +104,32 @@ export default class MainCommand extends Command {
       const spinner = ora().start();
 
       const explanationStream = await explainCommandStream(query, cmd);
-      let explanation = '';
+      spinner.stop();
 
-      spinner.stop()
-
-      this.context.stdout.write(`\n`)
-
-      for await (const chunk of explanationStream) {
-        const chunkText = chunk.text();
-        this.context.stdout.write(chunkText)
-        explanation += chunkText;
-      }
-
-      this.context.stdout.write(`\n\n`)
-      this.explanation = explanation;
+      this.explanation = await this.stream(explanationStream);
 
       await this.respond(query, cmd, { refreshCmd: true });
+    }
+
+    const revise = async () => {
+      const revisePrompt = await input({
+        message: "Enter your revision",
+      });
+      const spinner = ora().start();
+
+      const reviseStream = await reviseCommandStream(query, cmd, revisePrompt);
+      spinner.stop();
+
+      const revisedCmd = await this.stream(reviseStream, (chunk) => chalk.blue(chunk));
+
+      await this.respond(revisePrompt, revisedCmd, { refreshCmd: false });
     }
 
     const actions: Record<typeof action, () => Promise<void> | void> = {
       run,
       cancel,
       explain,
+      revise,
     }
     const handle = actions[action]!;
 
@@ -122,20 +147,10 @@ export default class MainCommand extends Command {
     const spinner = ora().start();
 
     const query = this.query.join(" ");
-    const cmdStream = await generateCommand(query)
+    const cmdStream = await generateCommandStream(query)
     spinner.stop();
 
-    let cmd = '';
-
-    this.context.stdout.write(`\n`)
-
-    for await (const chunk of cmdStream) {
-      const chunkText = chunk.text();
-      this.context.stdout.write(chunkText)
-      cmd += chunkText;
-    }
-
-    this.context.stdout.write(`\n\n`)
+    const cmd = await this.stream(cmdStream, (chunk) => chalk.blue(chunk));
 
     this.respond(query, cmd)
   }
