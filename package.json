@@ -1,7 +1,7 @@
 {
   "name": "strigi",
   "type": "module",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "CLI tool leveraging GenAI to generate commands based on user prompts.",
   "author": "Luis Emidio",
   "license": "MIT",
