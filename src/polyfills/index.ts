@@ -1,3 +1,3 @@
 import { PolyfillTextDecoderStream } from "./TextDecoderStream";
 
-(globalThis as any).TextDecoderStream = PolyfillTextDecoderStream
+(globalThis as unknown as any).TextDecoderStream = PolyfillTextDecoderStream

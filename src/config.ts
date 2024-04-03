@@ -1,24 +1,24 @@
-import { join } from 'node:path'
-import os from 'node:os'
+import { join } from "node:path"
+import os from "node:os"
 
 export interface Config {
   geminiApiKey: string | null | undefined
 }
 
 export const DEFAULT_CONFIG: Config = {
-  geminiApiKey: null
+  geminiApiKey: null,
 }
 
-const configDirPath = Bun.env.S_CONFIG_DIR_PATH || join(os.homedir(), './.config/strigi');
-const configPath = join(configDirPath, 'config.json')
-const file = Bun.file(configPath);
+const configDirPath = Bun.env.S_CONFIG_DIR_PATH || join(os.homedir(), "./.config/strigi")
+const configPath = join(configDirPath, "config.json")
+const file = Bun.file(configPath)
 
-export let config = DEFAULT_CONFIG;
+// eslint-disable-next-line import/no-mutable-exports
+export let config = DEFAULT_CONFIG
 
 export async function initConfig() {
-  if (await file.exists()) {
+  if (await file.exists())
     config = await file.json()
-  }
 }
 
 export async function saveConfig() {

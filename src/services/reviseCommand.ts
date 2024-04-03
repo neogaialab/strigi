@@ -1,4 +1,4 @@
-import { getGemini } from "../gemini";
+import { getGemini } from "../gemini"
 
 export async function reviseCommandStream(query: string, cmd: string, revise: string) {
   const gemini = getGemini()
@@ -34,6 +34,6 @@ export async function reviseCommandStream(query: string, cmd: string, revise: st
     git commit --amend
   `
 
-  const result = await gemini.generateContentStream(prompt);
-  return result.stream;
+  const result = await gemini.generateContentStream(prompt)
+  return result.stream
 }
