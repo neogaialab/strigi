@@ -1,8 +1,10 @@
-## Changelog
+# Changelog
 
-### [Unreleased]
+## [Unreleased]
+
+### Added
 
 - Add main command
-- Show explanation for line generated
 - Add run action
-- Add cancel option
+- Add cancel action
+- Add explanation for the generated command

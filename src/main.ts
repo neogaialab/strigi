@@ -1,38 +1,10 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
-import { Builtins, Cli, Command, Option } from 'clipanion';
-import figlet from 'figlet';
+import { Builtins, Cli } from 'clipanion';
 import pkg from '../package.json';
+import MainCommand from "./commands/MainCommand";
 
 const genAI = new GoogleGenerativeAI(Bun.env.GEMINI_API_KEY);
-
-const model = genAI.getGenerativeModel({ model: "gemini-pro" });
-
-async function genText() {
-  const prompt = "What is a cyberbrain?"
-
-  const result = await model.generateContent(prompt);
-  const response = await result.response;
-  const text = response.text();
-  return text;
-}
-
-class MainCommand extends Command {
-  noArt = Option.Boolean("--no-art", { description: "Skip ASCII art" });
-
-  static usage = Command.Usage({
-    description: pkg.description
-  })
-
-  async execute() {
-    if (!this.noArt) {
-      const body = figlet.textSync("Strigi");
-      this.context.stdout.write(`${body}\n`);
-    }
-
-    const text = await genText();
-    this.context.stdout.write(`${text}\n`);
-  }
-}
+export const gemini = genAI.getGenerativeModel({ model: "gemini-pro" });
 
 const [node, app, ...args] = process.argv;
 
