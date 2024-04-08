@@ -1,9 +1,9 @@
 import { getGemini } from "../gemini"
 
-export async function generateTextStream(query: string) {
+export async function generateTextStream(input: string) {
   const gemini = getGemini()
 
-  const prompt = query
+  const prompt = input
 
   const result = await gemini.generateContentStream(prompt)
   return result.stream

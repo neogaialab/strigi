@@ -8,21 +8,15 @@ export async function reviseCommandStream(query: string, cmd: string, revise: st
 
     ## Initial Query
 
-    <#region Input>
     ${query}
-    </#regionend>
 
     ## Proposed Command
 
-    <#region Command>
     ${cmd}
-    </#regionend>
 
     ## Revise Prompt
 
-    <#region Revise>
     ${revise}
-    </#regionend>
 
     ## Output Criteria
 

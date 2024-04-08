@@ -8,9 +8,7 @@ export async function generateCommandStream(query: string) {
 
     ## Input
 
-    <#region Input>
     ${query}
-    </#regionend>
 
     ## Output Criteria
 

@@ -8,15 +8,11 @@ export async function explainCommandStream(query: string, cmd: string) {
 
     ## User Query
 
-    <#region User Query>
     ${query}
-    </#regionend>
 
     ## Your Command
 
-    <#region Command>
     ${cmd}
-    </#regionend>
 
     ## Output Criteria
 
