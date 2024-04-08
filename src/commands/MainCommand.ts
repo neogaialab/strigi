@@ -1,13 +1,14 @@
+import type { EnhancedGenerateContentResponse } from "@google/generative-ai"
 import { confirm, input, select } from "@inquirer/prompts"
 import chalk from "chalk"
 import c from "chalk-template"
 import { Command, Option } from "clipanion"
 import ora from "ora"
-import type { EnhancedGenerateContentResponse } from "@google/generative-ai"
 import pkg from "../../package.json"
 import { getGemini } from "../gemini"
 import { explainCommandStream } from "../services/explainCommand"
 import { generateCommandStream } from "../services/generateCommand"
+import { generateTextStream } from "../services/generateText"
 import { reviseCommandStream } from "../services/reviseCommand"
 
 type Actions = "run" | "cancel" | "explain" | "revise"
@@ -17,6 +18,7 @@ export default class MainCommand extends Command {
     description: pkg.description,
   })
 
+  run = Option.Boolean("-s, --shell", { description: "Generate commands based on prompts" })
   query = Option.Rest({ name: "query", required: 1 })
 
   explanation: string | null = null
@@ -135,15 +137,7 @@ export default class MainCommand extends Command {
     await handle()
   }
 
-  async execute() {
-    try {
-      getGemini()
-    }
-    catch (e) {
-      this.context.stdout.write(c`{red Gemini API key not set.}\n`)
-      return
-    }
-
+  async runMode() {
     const spinner = ora().start()
 
     const query = this.query.join(" ")
@@ -153,5 +147,28 @@ export default class MainCommand extends Command {
     const cmd = await this.stream(cmdStream, chunk => chalk.blue(chunk))
 
     this.respond(query, cmd)
+  }
+
+  async execute() {
+    try {
+      getGemini()
+    }
+    catch (e) {
+      this.context.stdout.write(c`{red Gemini API key not set.}\n`)
+      return
+    }
+
+    if (this.run) {
+      this.runMode()
+      return
+    }
+
+    const spinner = ora().start()
+
+    const query = this.query.join(" ")
+    const cmdStream = await generateTextStream(query)
+    spinner.stop()
+
+    await this.stream(cmdStream, chunk => chalk.cyan(chunk))
   }
 }
