@@ -1,3 +1,4 @@
+import { exec, execSync } from "node:child_process"
 import type { EnhancedGenerateContentResponse } from "@google/generative-ai"
 import { confirm, input, select } from "@inquirer/prompts"
 import chalk from "chalk"
@@ -77,24 +78,18 @@ export default class MainCommand extends Command {
       if (answer) {
         this.context.stdout.write(c`\n{green Executing...}\n`)
 
-        const cmdArray = cmd.split(" ")
-        const label = cmdArray[0]
+        await new Promise<void>((res) => {
+          exec(cmd, (e, stdout, stderr) => {
+            if (e instanceof Error) {
+              this.context.stdout.write(c`{red Encountered an error: }\n\n${stderr}`)
+              return
+            }
 
-        const commandPath = Bun.which(label)
+            this.context.stdout.write(`\n${stdout}`)
+            res()
+          })
+        })
 
-        if (!commandPath) {
-          this.context.stdout.write(c`{red Command not found in PATH}\n`)
-          return
-        }
-
-        const res = Bun.spawnSync(cmdArray)
-
-        if (!res.success) {
-          this.context.stdout.write(c`{red Command failed with exit code ${res.exitCode}. }\n\n${res.stderr}`)
-          return
-        }
-
-        this.context.stdout.write(`\n${res.stdout}`)
         return
       }
 
