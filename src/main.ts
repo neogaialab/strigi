@@ -7,7 +7,7 @@ import { initConfig } from "./config"
 import AuthCommand from "./commands/AuthCommand"
 import LogoutCommand from "./commands/LogoutCommand"
 import ExplainCommand from "./commands/ExplainCommand"
-import ShellCommand from "./commands/ShellCommand"
+import RunCommand from "./commands/RunCommand"
 import InstructCommand from "./commands/InstructCommand"
 
 await initConfig()
@@ -20,7 +20,7 @@ const cli = new Cli({
 cli.register(Builtins.HelpCommand)
 cli.register(Builtins.VersionCommand)
 cli.register(ExplainCommand)
-cli.register(ShellCommand)
+cli.register(RunCommand)
 cli.register(AuthCommand)
 cli.register(LogoutCommand)
 cli.register(InstructCommand)

@@ -8,7 +8,7 @@ import { config } from "../config"
 export default class ExplainCommand extends GenerativeCommand {
   static usage = Command.Usage({
     description: "Get an explanation for a command.",
-    details: `This command generates detailed information about how to use a specific command.`,
+    details: "The `s explain` command is designed to provide comprehensive explanations for specific CLI commands, aiding users in understanding their usage and functionalities in-depth.",
     examples: [
       ["Get an explanation for the `ls` command.", "s explain \"ls\""],
       ["Get an explanation for the `git status` command.", "s explain \"git status\""],

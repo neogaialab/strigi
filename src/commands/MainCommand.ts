@@ -4,7 +4,12 @@ import ExplainCommand from "./ExplainCommand"
 
 export default class MainCommand extends GenerativeCommand {
   static usage = Command.Usage({
-    description: "Generate content based on prompt",
+    description: "Get CLI command assistance based on a prompt.",
+    details: `The \`main\` command is a versatile shortcut that combines the functionality of \`s run\` and \`s explain\` commands with the -e flag. It allows you to execute a shell command directly or obtain an explanation for a specific command in natural language.`,
+    examples: [
+      ["Generate a command to list only JSON files.", "s \"how to list JSON files\""],
+      ["Get an explanation for the `git status` command.", "s explain \"git status\""],
+    ],
   })
 
   isExplain = Option.Boolean("-e, --explain", { description: ExplainCommand.usage.description })
@@ -18,6 +23,6 @@ export default class MainCommand extends GenerativeCommand {
       return
     }
 
-    this.cli.run(["shell", ...this.prompt])
+    this.cli.run(["run", ...this.prompt])
   }
 }

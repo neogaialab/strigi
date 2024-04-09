@@ -12,12 +12,17 @@ import { config } from "../config"
 
 type Actions = "run" | "cancel" | "explain" | "revise"
 
-export default class ShellCommand extends GenerativeCommand {
+export default class RunCommand extends GenerativeCommand {
   static usage = Command.Usage({
-    description: "Generate a command based on the prompt",
+    description: "Generate and execute commands from natural language prompts.",
+    details: `The \`s run\` command is designed to interpret natural language prompts and generate corresponding CLI commands. It then offers the option to revise the generated command before execution.`,
+    examples: [
+      ["Generate and execute a command to list files.", "s generate \"list files in current directory\" -e"],
+      ["Generate and execute a command to update packages.", "s generate \"update all packages\" -e"],
+    ],
   })
 
-  static paths = [["shell"], ["s"]]
+  static paths = [["run"], ["r"]]
   prompt = Option.Rest({ name: "prompt", required: 1 })
 
   explanation: string | null = null

@@ -6,8 +6,8 @@ import type { CustomInstructions } from "../types"
 
 export default class InstructCommand extends Command {
   static usage = Command.Usage({
-    description: "Add custom instructions to the model",
-    details: ` Custom instructions allow you to share anything you'd like the model to consider in its response. Your custom instructions will be added to new commands going forward.`,
+    description: "Add custom instructions for tailored responses.",
+    details: `The \`s instruct\` command empowers you to provide specific guidelines or preferences to the model for more tailored and accurate responses. Your custom instructions will be integrated into future interactions with the model.`,
     category: "Configuration",
   })
 

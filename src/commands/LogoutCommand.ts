@@ -4,7 +4,9 @@ import { config, saveConfig } from "../config"
 
 export default class LogoutCommand extends Command {
   static usage = Command.Usage({
-    description: "Delete Gemini API key from config",
+    description: "Log out and remove Gemini API key.",
+    details: `The \`logout\` command securely removes the Gemini API key from the configuration, enhancing access control and security measures.`,
+    category: "Authentication",
   })
 
   static paths = [["logout"], ["l"]]

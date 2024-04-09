@@ -5,7 +5,9 @@ import { config, saveConfig } from "../config"
 
 export default class AuthCommand extends Command {
   static usage = Command.Usage({
-    description: "Authenticate",
+    description: "Set Gemini API key and authenticate.",
+    details: `The \`auth\` command facilitates authentication by saving the obtained Gemini API key in the configuration file.`,
+    category: "Authentication",
   })
 
   static paths = [["auth"], ["a"]]
