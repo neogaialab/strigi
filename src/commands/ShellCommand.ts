@@ -8,6 +8,7 @@ import { explainCommandStream } from "../services/explainCommand"
 import { generateCommandStream } from "../services/generateCommand"
 import { reviseCommandStream } from "../services/reviseCommand"
 import GenerativeCommand from "../lib/GenerativeCommand"
+import { config } from "../config"
 
 type Actions = "run" | "cancel" | "explain" | "revise"
 
@@ -81,7 +82,8 @@ export default class ShellCommand extends GenerativeCommand {
     const explain = async () => {
       const spinner = ora().start()
 
-      const explanationStream = await explainCommandStream(query, cmd)
+      const ci = config.customInstructions
+      const explanationStream = await explainCommandStream(query, cmd, ci)
       spinner.stop()
 
       this.explanation = await this.writeStream(explanationStream)
@@ -95,7 +97,8 @@ export default class ShellCommand extends GenerativeCommand {
       })
       const spinner = ora().start()
 
-      const reviseStream = await reviseCommandStream(query, cmd, revisePrompt)
+      const ci = config.customInstructions
+      const reviseStream = await reviseCommandStream(query, cmd, revisePrompt, ci)
       spinner.stop()
 
       const revisedCmd = await this.writeStream(reviseStream, chunk => chalk.blue(chunk))
@@ -120,7 +123,8 @@ export default class ShellCommand extends GenerativeCommand {
     const spinner = ora().start()
 
     const query = this.prompt.join(" ")
-    const cmdStream = await generateCommandStream(query)
+    const ci = config.customInstructions
+    const cmdStream = await generateCommandStream(query, ci)
     spinner.stop()
 
     const cmd = await this.writeStream(cmdStream, chunk => chalk.blue(chunk))

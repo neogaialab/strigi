@@ -17,6 +17,6 @@ export default class MainCommand extends GenerativeCommand {
       return
     }
 
-    this.cli.run(["text", ...this.prompt])
+    this.cli.run(["get-assistance", ...this.prompt])
   }
 }

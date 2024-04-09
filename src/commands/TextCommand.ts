@@ -2,7 +2,8 @@ import chalk from "chalk"
 import { Command, Option } from "clipanion"
 import ora from "ora"
 import GenerativeCommand from "../lib/GenerativeCommand"
-import { generateTextStream } from "../services/generateText"
+import { generateAssistanceStream } from "../services/generateText"
+import { config } from "../config"
 
 export default class TextCommand extends GenerativeCommand {
   static usage = Command.Usage({
@@ -19,7 +20,8 @@ export default class TextCommand extends GenerativeCommand {
     const spinner = ora().start()
 
     const prompt = this.prompt.join(" ")
-    const cmdStream = await generateTextStream(prompt)
+    const ci = config.customInstructions
+    const cmdStream = await generateAssistanceStream(prompt, ci)
     spinner.stop()
 
     await this.writeStream(cmdStream, chunk => chalk.cyan(chunk))

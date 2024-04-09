@@ -8,6 +8,7 @@ import AuthCommand from "./commands/AuthCommand"
 import LogoutCommand from "./commands/LogoutCommand"
 import TextCommand from "./commands/TextCommand"
 import ShellCommand from "./commands/ShellCommand"
+import InstructCommand from "./commands/InstructCommand"
 
 await initConfig()
 
@@ -23,4 +24,5 @@ cli.register(TextCommand)
 cli.register(ShellCommand)
 cli.register(AuthCommand)
 cli.register(LogoutCommand)
+cli.register(InstructCommand)
 cli.runExit(process.argv.slice(2))

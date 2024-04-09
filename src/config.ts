@@ -1,9 +1,6 @@
 import { join } from "node:path"
 import os from "node:os"
-
-export interface Config {
-  geminiApiKey: string | null | undefined
-}
+import type { Config } from "./types"
 
 export const DEFAULT_CONFIG: Config = {
   geminiApiKey: null,
