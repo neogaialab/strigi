@@ -29,7 +29,7 @@ export default class RunCommand extends GenerativeCommand {
 
   async respond(query: string, cmd: string, options?: { refreshCmd: boolean }) {
     if (options?.refreshCmd)
-      this.context.stdout.write(chalk.blue(`${cmd}\n\n`))
+      this.context.stdout.write(chalk.cyan(`${cmd}\n\n`))
 
     const action = await select<Actions>({
       message: "",
@@ -106,7 +106,7 @@ export default class RunCommand extends GenerativeCommand {
       const reviseStream = await reviseCommandStream(query, cmd, revisePrompt, ci)
       spinner.stop()
 
-      const revisedCmd = await this.writeStream(reviseStream, chunk => chalk.blue(chunk))
+      const revisedCmd = await this.writeStream(reviseStream, chunk => chalk.cyan(chunk))
 
       await this.respond(revisePrompt, revisedCmd, { refreshCmd: false })
     }
@@ -132,7 +132,7 @@ export default class RunCommand extends GenerativeCommand {
     const cmdStream = await generateCommandStream(query, ci)
     spinner.stop()
 
-    const cmd = await this.writeStream(cmdStream, chunk => chalk.blue(chunk))
+    const cmd = await this.writeStream(cmdStream, chunk => chalk.cyan(chunk))
 
     this.respond(query, cmd)
   }
