@@ -35,19 +35,19 @@ export default class RunCommand extends GenerativeCommand {
       message: "",
       choices: [
         {
-          name: "Run",
+          name: "Run (1)",
           value: "run",
         },
         {
-          name: "Revise",
+          name: "Revise (2)",
           value: "revise",
         },
         {
-          name: !this.explanation ? "Explain" : "Explain again",
+          name: !this.explanation ? "Explain (3)" : "Explain again (3)",
           value: "explain",
         },
         {
-          name: "Cancel",
+          name: "Cancel (4)",
           value: "cancel",
         },
       ],
