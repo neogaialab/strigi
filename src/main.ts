@@ -6,7 +6,7 @@ import MainCommand from "./commands/MainCommand"
 import { initConfig } from "./config"
 import AuthCommand from "./commands/AuthCommand"
 import LogoutCommand from "./commands/LogoutCommand"
-import TextCommand from "./commands/TextCommand"
+import ExplainCommand from "./commands/ExplainCommand"
 import ShellCommand from "./commands/ShellCommand"
 import InstructCommand from "./commands/InstructCommand"
 
@@ -19,10 +19,10 @@ const cli = new Cli({
 })
 cli.register(Builtins.HelpCommand)
 cli.register(Builtins.VersionCommand)
-cli.register(MainCommand)
-cli.register(TextCommand)
+cli.register(ExplainCommand)
 cli.register(ShellCommand)
 cli.register(AuthCommand)
 cli.register(LogoutCommand)
 cli.register(InstructCommand)
+cli.register(MainCommand)
 cli.runExit(process.argv.slice(2))

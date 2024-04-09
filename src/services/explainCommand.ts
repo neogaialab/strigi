@@ -2,18 +2,14 @@ import { getGemini } from "../gemini"
 import type { CustomInstructions } from "../types"
 
 export async function explainCommandStream(
-  query: string,
   cmd: string,
   ci?: CustomInstructions,
 ) {
   const gemini = getGemini()
 
   let prompt = `
-    You are a CLI command generator. You are expected to explain a command that you generated based on user's query and information. Additionally, consider adapting your revised command based on the user's response preference, if necessary.
-
-    ## User Query
-
-    ${query}
+    You are a CLI command generator. You are expected to explain a command based on user's query and information. Additionally, you should adapt your explanation based on the user's response preference.
+    
   `
 
   if (ci?.aboutMe) {
@@ -26,14 +22,14 @@ export async function explainCommandStream(
 
   if (ci?.responsePreference) {
     prompt += `
-    ## How would the user like the model to respond
+    ## How would the user like you to respond
     
     ${ci.responsePreference}
   `
   }
 
   prompt += `
-    ## Your Command
+    ## Command
 
     ${cmd}
 

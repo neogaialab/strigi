@@ -83,7 +83,7 @@ export default class ShellCommand extends GenerativeCommand {
       const spinner = ora().start()
 
       const ci = config.customInstructions
-      const explanationStream = await explainCommandStream(query, cmd, ci)
+      const explanationStream = await explainCommandStream(cmd, ci)
       spinner.stop()
 
       this.explanation = await this.writeStream(explanationStream)
