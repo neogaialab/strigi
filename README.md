@@ -1,15 +1,19 @@
-# Strigi
+<div align="center">
+  <!-- <img src="https://github.com/neogaialab.png" width="128" height="128"/> -->
+  <h1>Strigi — CLI Command Assistant</h1>
+  </table>
+</div>
 
-Strigi is an experimental CLI tool leveraging GenAI to generate commands based on user prompts.
+![Demo](/public/demo.gif)
 
-- **🔍 Describe**: Generate commands effortlessly using natural language queries.
-- **✏️ Revise**: Easily review and revise generated commands for accuracy and customization.
-- **📚 Understand**: Ask for detailed explanations before executing commands for better understanding.
-- **▶️ Run**: Run commands directly without the need to manually copy and paste.
-- **🌐 Open-source**: Strigi is open-source, allowing for transparency and community contributions.
-- **💰 Free**: Enjoy free usage of Strigi by bringing your own Gemini API key.
-- **🎨 Elegant**: Experience elegant and visually appealing terminal output styling.
-- **⚡ Fast**: Utilize streaming for fast and efficient responses, enhancing performance.
+|                                                                                   |                                                                               |
+| --------------------------------------------------------------------------------- | ----------------------------------------------------------------------------- |
+| **🔍 Describe:** Generate commands effortlessly using natural language queries. | **🌐 Open-source:** Strigi is open-source, allowing for transparency and community contributions. |
+| **✏️ Revise:** Easily review and revise generated commands for accuracy and customization. | **💰 Free:** Enjoy free usage of Strigi by bringing your own Gemini API key. |
+| **📚 Understand:** Ask for detailed explanations before executing commands for better understanding. | **🎨 Elegant:** Experience elegant and visually appealing terminal output styling. |
+| **▶️ Run:** Run commands directly without the need to manually copy and paste. | **⚡ Fast:** Utilize streaming for fast and efficient responses, enhancing performance. |
+
+---
 
 ## Guide
 
