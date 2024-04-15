@@ -39,7 +39,10 @@
     "build": "bun build ./src/main.ts --outfile dist/s --compile --minify --sourcemap",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "release": "release-it"
+    "release": "release-it",
+    "docs:dev": "vitepress dev docs",
+    "docs:build": "vitepress build docs",
+    "docs:preview": "vitepress preview docs"
   },
   "peerDependencies": {
     "typescript": "^5.0.0"
@@ -58,6 +61,7 @@
     "@types/bun": "latest",
     "@types/inquirer": "^9.0.7",
     "eslint": "^8.57.0",
-    "release-it": "^17.1.1"
+    "release-it": "^17.1.1",
+    "vitepress": "^1.1.0"
   }
 }
