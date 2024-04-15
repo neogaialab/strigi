@@ -25,6 +25,15 @@ export default defineConfig({
         ],
       },
       {
+        text: "Guide",
+        items: [
+          { text: "Installation", link: "/guide/installation" },
+          { text: "Authentication", link: "/guide/authentication" },
+          { text: "Getting Assistance", link: "/guide/getting-assistance" },
+          { text: "Configuration", link: "/guide/configuration" },
+        ],
+      },
+      {
         text: "Reference",
         items: [
           { text: "CLI Reference", link: "/reference/cli" },
