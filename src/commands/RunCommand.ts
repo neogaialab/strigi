@@ -17,8 +17,8 @@ export default class RunCommand extends GenerativeCommand {
     description: "Generate and execute commands from natural language prompts.",
     details: `The \`s run\` command is designed to interpret natural language prompts and generate corresponding CLI commands. It then offers the option to revise the generated command before execution.`,
     examples: [
-      ["Generate and execute a command to list files.", "s generate \"list files in current directory\" -e"],
-      ["Generate and execute a command to update packages.", "s generate \"update all packages\" -e"],
+      ["Generate and execute a command to list files.", "s run \"list files in current directory\""],
+      ["Generate and execute a command to update packages.", "s run \"update all packages\""],
     ],
   })
 
