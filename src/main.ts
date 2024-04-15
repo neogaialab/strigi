@@ -12,6 +12,11 @@ import InstructCommand from "./commands/InstructCommand"
 
 await initConfig()
 
+process.on("SIGINT", () => {
+  process.stdout.write("\n\n")
+  process.exit()
+})
+
 const cli = new Cli({
   binaryName: "s",
   binaryLabel: "Strigi",
