@@ -1,5 +1,5 @@
 import { type GenerativeModel, GoogleGenerativeAI } from "@google/generative-ai"
-import { config } from "./config"
+import { config } from "../config"
 
 let gemini: GenerativeModel
 

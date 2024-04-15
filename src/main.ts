@@ -1,15 +1,15 @@
-import "./polyfills"
 import process from "node:process"
-import os from "node:os"
 import { Builtins, Cli } from "clipanion"
 import pkg from "../package.json"
-import MainCommand from "./commands/MainCommand"
-import { initConfig } from "./config"
 import AuthCommand from "./commands/AuthCommand"
-import LogoutCommand from "./commands/LogoutCommand"
 import ExplainCommand from "./commands/ExplainCommand"
-import RunCommand from "./commands/RunCommand"
+import GenerateCommand from "./commands/GenerateCommand"
 import InstructCommand from "./commands/InstructCommand"
+import LogoutCommand from "./commands/LogoutCommand"
+import MainCommand from "./commands/MainCommand"
+import ReviseCommand from "./commands/ReviseCommand"
+import { initConfig } from "./config"
+import "./polyfills"
 
 await initConfig()
 
@@ -26,7 +26,8 @@ const cli = new Cli({
 cli.register(Builtins.HelpCommand)
 cli.register(Builtins.VersionCommand)
 cli.register(ExplainCommand)
-cli.register(RunCommand)
+cli.register(ReviseCommand)
+cli.register(GenerateCommand)
 cli.register(AuthCommand)
 cli.register(LogoutCommand)
 cli.register(InstructCommand)

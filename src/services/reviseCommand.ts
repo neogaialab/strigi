@@ -1,5 +1,5 @@
 import process from "node:process"
-import { getGemini } from "../gemini"
+import { getGemini } from "../lib/gemini"
 import type { CustomInstructions } from "../types"
 
 export async function reviseCommandStream(
