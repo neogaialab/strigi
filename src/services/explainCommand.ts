@@ -1,3 +1,4 @@
+import process from "node:process"
 import { getGemini } from "../gemini"
 import type { CustomInstructions } from "../types"
 
@@ -11,11 +12,14 @@ export async function explainCommandStream(
     You are a CLI command generator. You are expected to explain a command based on user's query and information. Additionally, you should adapt your explanation based on the user's response preference.
     
   `
+  prompt += `
+    ## About the user
+
+    OS Platform: ${process.platform}
+  `
 
   if (ci?.aboutMe) {
     prompt += `
-    ## About the user
-    
     ${ci.aboutMe}
   `
   }

@@ -1,5 +1,6 @@
 import "./polyfills"
 import process from "node:process"
+import os from "node:os"
 import { Builtins, Cli } from "clipanion"
 import pkg from "../package.json"
 import MainCommand from "./commands/MainCommand"

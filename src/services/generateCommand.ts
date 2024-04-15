@@ -1,3 +1,4 @@
+import process from "node:process"
 import { getGemini } from "../gemini"
 import type { CustomInstructions } from "../types"
 
@@ -16,10 +17,14 @@ export async function generateCommandStream(
 
   `
 
+  prompt += `
+    ## About the user
+
+    OS Platform: ${process.platform}
+  `
+
   if (ci?.aboutMe) {
     prompt += `
-    ## About the user
-    
     ${ci.aboutMe}
   `
   }
