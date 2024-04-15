@@ -8,13 +8,26 @@ export default defineConfig({
     nav: [
       { text: "Home", link: "/" },
       { text: "Docs", link: "/overview/introduction" },
-      { text: "Changelog", link: "https://github.com/neogaialab/strigi/blob/main/CHANGELOG.md" },
+      {
+        text: "About",
+        items: [
+          { text: "Introduction", link: "/overview/introduction" },
+          { text: "Changelog", link: "https://github.com/neogaialab/strigi/blob/main/CHANGELOG.md" },
+          { text: "Contributing Guide", link: "https://github.com/neogaialab/strigi/blob/main/CONTRIBUTING.md" },
+        ],
+      },
     ],
     sidebar: [
       {
         text: "Overview",
         items: [
           { text: "Introduction", link: "/overview/introduction" },
+        ],
+      },
+      {
+        text: "Reference",
+        items: [
+          { text: "CLI Reference", link: "/reference/cli" },
         ],
       },
     ],
