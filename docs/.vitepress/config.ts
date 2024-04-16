@@ -4,6 +4,7 @@ export default defineConfig({
   title: "Strigi",
   description: "CLI command assistance utilizing GenAI-powered natural language prompts.",
   lang: "en-US",
+  base: "/strigi/",
   themeConfig: {
     nav: [
       { text: "Home", link: "/" },
