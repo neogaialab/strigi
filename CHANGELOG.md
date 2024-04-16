@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## [0.3.0] - 2024-04-16
+
 ### Added
 
 - Added OS platform injection in prompts
