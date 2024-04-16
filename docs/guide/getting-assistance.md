@@ -38,3 +38,18 @@ Understanding existing commands is another area where Strigi can be helpful:
    ```
 
 2. **Press Enter:** Strigi will analyze your request and provide a clear explanation of the command's purpose, usage, and options.
+
+## Asking for Revision
+
+Strigi allows you to easily review and modify commands for accuracy and customization. Follow these steps to request a revision:
+
+1. **Open your terminal:** Ensure you're in the terminal where you interact with Strigi.
+2. **Type your request:** For example, to revise the command `git log`, type:
+
+   ```bash
+   $ s revise "git log"
+   ```
+
+3. **Press Enter:** Strigi will process your request and prompt you to enter the desired adjustments.
+4. **Modify as needed:** Describe your adjustments in natural language for accuracy and precision.
+5. **Choose your action:** Once you have the revised command, proceed with your desired action as usual.

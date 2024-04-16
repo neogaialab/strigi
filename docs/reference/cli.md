@@ -12,12 +12,13 @@ Get CLI command assistance based on a prompt.
 
 - Options
   - **-e, --explain**: (optional) Get an explanation for a command directly.
+  - **-r, --revise**: (optional) Revise a command directly.
   - **-v, --version**: (optional) Get the Strigi version.
   - **-h, --help**: (optional) Get help.
 
 - Details
 
-  The `main` command is a versatile shortcut that combines the functionality of `s run` and `s explain` commands with the -e flag. It allows you to execute a shell command directly or obtain an explanation for a specific command in natural language.
+  The `main` command is a versatile shortcut that combines the functionality of `s generate`, `s explain` with the `-e` flag, and `s revise` with the `-r` flag. It allows you to execute a shell command directly, obtain an explanation or revise a specific command in natural language.
 
 - Examples
 
@@ -64,32 +65,36 @@ Log out and remove Gemini API key.
 
   The `logout` command securely removes the Gemini API key from the configuration, enhancing access control and security measures.
 
-## `run` <Badge type="info" text="subcommand" />
+## `generate` <Badge type="info" text="subcommand" />
 
 Generate and execute commands from natural language prompts.
 
 - Usage
 
   ```bash
-  $ s run <prompt> ...
+  $ s generate <prompt> ...
+  ```
+
+  ```bash
+  $ s g <prompt> ...
   ```
 
 - Details
 
-  The `s run` command is designed to interpret natural language prompts and generate corresponding CLI commands. It then offers the option to revise the generated command before execution.
+  The `s generate` command is designed to interpret natural language prompts and generate corresponding CLI commands. It then offers the option to revise the generated command before execution.
 
 - Examples
 
   Generate and execute a command to list files:
 
   ```bash
-  $ s run "list files in current directory"
+  $ s generate "list files in current directory"
   ```
 
   Get an explanation for the `git status` command:
 
   ```bash
-  $ s run "update all packages"
+  $ s generate "update all packages"
   ```
 
 ## `explain` <Badge type="info" text="subcommand" />
@@ -100,6 +105,10 @@ Get an explanation for a command.
 
   ```bash
   $ s explain <command>
+  ```
+
+  ```bash
+  $ s e <command>
   ```
 
 - Details
@@ -120,6 +129,38 @@ Get an explanation for a command.
   $ s explain "git status"
   ```
 
+## `revise` <Badge type="info" text="subcommand" />
+
+Start a command revision.
+
+- Usage
+
+  ```bash
+  $ s revise <command>
+  ```
+
+  ```bash
+  $ s r <command>
+  ```
+
+- Details
+
+  The `s revise` command is designed to start directly a revision for a command. This enables you to tailor the command to your specific needs before execution.
+
+- Examples
+
+  Start a revision for the `ls` command:
+
+  ```bash
+  $ s revise "ls"
+  ```
+
+  Start a revision for the `git log` command:
+
+  ```bash
+  $ s revise "git log"
+  ```
+
 ## `instruct` <Badge type="info" text="subcommand" />
 
 Add custom instructions for tailored responses.
@@ -128,6 +169,10 @@ Add custom instructions for tailored responses.
 
   ```bash
   $ s instruct
+  ```
+
+  ```bash
+  $ s i
   ```
 
 - Details
