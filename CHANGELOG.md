@@ -2,6 +2,21 @@
 
 ## [Unreleased]
 
+### Added
+
+- Added OS platform injection in prompts
+- Added revise command
+
+### Fixed
+
+- Fixed `Ctrl+C` line break
+
+### Changed
+
+- Renamed `s run` to `s generate`
+- Renamed `s r` to `s g`
+- Allowed the user to choose actions after canceling command execution
+
 ## [0.2.0] - 2024-04-09
 
 ### Added

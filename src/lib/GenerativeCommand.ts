@@ -70,8 +70,10 @@ abstract class GenerativeCommand extends Command {
       ],
     })
 
-    const cancel = () => {
-      this.context.stdout.write(c`{yellow Canceled.}\n`)
+    const cancel = async () => {
+      this.context.stdout.write(c`{yellow Canceled.}\n\n`)
+
+      await this.respond(query, cmd, { refreshCmd: true })
     }
 
     const run = async () => {
