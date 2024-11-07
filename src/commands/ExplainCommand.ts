@@ -1,9 +1,5 @@
-import chalk from "chalk"
 import { Command, Option } from "clipanion"
-import ora from "ora"
 import GenerativeCommand from "../lib/GenerativeCommand"
-import { explainCommandStream } from "../services/explainCommand"
-import { config } from "../config"
 
 export default class ExplainCommand extends GenerativeCommand {
   static usage = Command.Usage({
@@ -17,18 +13,10 @@ export default class ExplainCommand extends GenerativeCommand {
 
   static paths = [["explain"], ["e"]]
 
-  command = Option.String({ required: true })
+  command = Option.Rest({ required: 1 })
 
   async execute() {
     this.assertGeminiKey()
-
-    const spinner = ora().start()
-
-    const command = this.command
-    const ci = config.customInstructions
-    const cmdStream = await explainCommandStream(command, ci)
-    spinner.stop()
-
-    await this.writeStream(cmdStream, chunk => chalk.cyan(chunk))
+    await this.explain(this.command.join(" "))
   }
 }

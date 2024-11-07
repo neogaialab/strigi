@@ -51,5 +51,5 @@ export async function reviseCommandStream(
   `
 
   const result = await gemini.generateContentStream(prompt)
-  return result.stream
+  return result
 }

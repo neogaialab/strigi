@@ -47,5 +47,5 @@ export async function explainCommandStream(
   `
 
   const result = await gemini.generateContentStream(prompt)
-  return result.stream
+  return result
 }

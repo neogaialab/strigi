@@ -1,9 +1,9 @@
 import chalk from "chalk"
 import { Command, Option } from "clipanion"
-import ora from "ora"
-import { generateCommandStream } from "../services/generateCommand"
-import GenerativeCommand from "../lib/GenerativeCommand"
 import { config } from "../config"
+import GenerativeCommand from "../lib/GenerativeCommand"
+import { checkResponse } from "../services/checkResponse"
+import { generateCommandStream } from "../services/generateCommand"
 
 export default class GenerateCommand extends GenerativeCommand {
   static usage = Command.Usage({
@@ -23,15 +23,21 @@ export default class GenerateCommand extends GenerativeCommand {
   async execute() {
     this.assertGeminiKey()
 
-    const spinner = ora().start()
-
     const query = this.prompt.join(" ")
     const ci = config.customInstructions
-    const cmdStream = await generateCommandStream(query, ci)
-    spinner.stop()
 
-    const cmd = await this.writeStream(cmdStream, chunk => chalk.cyan(chunk))
+    this.tryAsync(async (spinner) => {
+      const result = await generateCommandStream(query, ci)
+      spinner.stop()
+      const stream = await checkResponse(result)
 
-    this.respond(query, cmd)
+      const cmd = await this.writeStream(stream, chunk => chalk.cyan(chunk))
+
+      this.respond(query, cmd)
+    }, {
+      onError: () => {
+        this.respond(query, "[null]", { refreshCmd: false, enableRetry: true })
+      },
+    })
   }
 }

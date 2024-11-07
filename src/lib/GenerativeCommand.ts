@@ -1,17 +1,24 @@
-import process from "node:process"
 import { exec } from "node:child_process"
+import process from "node:process"
 import type { EnhancedGenerateContentResponse } from "@google/generative-ai"
-import { Command } from "clipanion"
-import c from "chalk-template"
 import { confirm, input, select } from "@inquirer/prompts"
 import chalk from "chalk"
-import ora from "ora"
+import c from "chalk-template"
+import { Command } from "clipanion"
+import ora, { type Ora } from "ora"
+import { config } from "../config"
 import { explainCommandStream } from "../services/explainCommand"
 import { reviseCommandStream } from "../services/reviseCommand"
-import { config } from "../config"
+import { checkResponse } from "../services/checkResponse"
 import { getGemini } from "./gemini"
 
-type Actions = "run" | "cancel" | "explain" | "revise"
+type Actions = "run" | "cancel" | "explain" | "revise" | "retry"
+type Choices = Parameters<typeof select<Actions>>[0]["choices"]
+type TryAsyncCallback = (spinner: Ora) => Promise<void> | void
+interface RespondOptions {
+  refreshCmd?: boolean
+  enableRetry?: boolean
+}
 
 abstract class GenerativeCommand extends Command {
   explanation: string | null = null
@@ -44,34 +51,79 @@ abstract class GenerativeCommand extends Command {
     return text
   }
 
-  async respond(query: string, cmd: string, options?: { refreshCmd: boolean }) {
+  async revise(cmd: string, previousQuery?: string) {
+    const revisePrompt = await input({
+      message: "Enter your revision",
+    })
+
+    const ci = config.customInstructions
+    const query = previousQuery || "[null]"
+
+    this.tryAsync(async (spinner) => {
+      const result = await reviseCommandStream(query, cmd, revisePrompt, ci)
+      spinner.stop()
+      const stream = await checkResponse(result)
+      const revisedCmd = await this.writeStream(stream, chunk => chalk.cyan(chunk))
+
+      this.respond(query, revisedCmd, { refreshCmd: false })
+    }, {
+      onError: () => {
+        this.respond(query, cmd, { refreshCmd: false, enableRetry: true })
+      },
+    })
+  }
+
+  async explain(cmd: string, previousQuery?: string) {
+    const query = previousQuery || "[null]"
+
+    await this.tryAsync(async (spinner) => {
+      const result = await explainCommandStream(cmd, config.customInstructions)
+      spinner.stop()
+      const stream = await checkResponse(result)
+
+      this.explanation = await this.writeStream(stream, chunk => chalk.cyan(chunk))
+    }, {
+      onError: () => {
+        this.respond(query, cmd, { refreshCmd: false, enableRetry: true })
+      },
+    })
+  }
+
+  async respond(query: string, cmd: string, options?: RespondOptions) {
     if (options?.refreshCmd)
       this.context.stdout.write(chalk.cyan(`${cmd}\n\n`))
 
+    const choices: Choices = [
+      {
+        name: !options?.enableRetry ? "Run (1)" : "Retry (1)",
+        value: !options?.enableRetry ? "run" : "retry",
+      },
+      {
+        name: "Revise (2)",
+        value: "revise",
+        disabled: options?.enableRetry,
+      },
+      {
+        name: !this.explanation ? "Explain (3)" : "Explain again (3)",
+        value: "explain",
+        disabled: options?.enableRetry,
+      },
+      {
+        name: "Cancel (4)",
+        value: "cancel",
+      },
+    ]
+
     const action = await select<Actions>({
       message: "",
-      choices: [
-        {
-          name: "Run (1)",
-          value: "run",
-        },
-        {
-          name: "Revise (2)",
-          value: "revise",
-        },
-        {
-          name: !this.explanation ? "Explain (3)" : "Explain again (3)",
-          value: "explain",
-        },
-        {
-          name: "Cancel (4)",
-          value: "cancel",
-        },
-      ],
+      choices,
     })
 
     const cancel = async () => {
       this.context.stdout.write(c`{yellow Canceled.}\n\n`)
+
+      if (options?.enableRetry)
+        process.exit(0)
 
       await this.respond(query, cmd, { refreshCmd: true })
     }
@@ -103,42 +155,37 @@ abstract class GenerativeCommand extends Command {
       cancel()
     }
 
-    const explain = async () => {
-      const spinner = ora().start()
-
-      const ci = config.customInstructions
-      const explanationStream = await explainCommandStream(cmd, ci)
-      spinner.stop()
-
-      this.explanation = await this.writeStream(explanationStream)
-
-      await this.respond(query, cmd, { refreshCmd: true })
-    }
-
-    const revise = async () => {
-      const revisePrompt = await input({
-        message: "Enter your revision",
-      })
-      const spinner = ora().start()
-
-      const ci = config.customInstructions
-      const reviseStream = await reviseCommandStream(query, cmd, revisePrompt, ci)
-      spinner.stop()
-
-      const revisedCmd = await this.writeStream(reviseStream, chunk => chalk.cyan(chunk))
-
-      await this.respond(revisePrompt, revisedCmd, { refreshCmd: false })
+    const retry = () => {
+      this.context.stdout.write(c`{yellow Retrying...}\n`)
+      this.execute()
     }
 
     const actions: Record<typeof action, () => Promise<void> | void> = {
       run,
       cancel,
-      explain,
-      revise,
+      explain: () => this.explain(cmd, query),
+      revise: () => this.revise(cmd, query),
+      retry,
     }
     const handle = actions[action]!
 
     await handle()
+  }
+
+  async tryAsync(cb: TryAsyncCallback, options?: { onError: (e: Error) => void }) {
+    const spinner = ora().start()
+
+    try {
+      await cb(spinner)
+    }
+    catch (_e) {
+      const e = _e as Error
+
+      spinner.stop()
+
+      this.context.stdout.write(c`\n{red Error: ${e.message}}\n\n`)
+      options?.onError(e)
+    }
   }
 }
 
