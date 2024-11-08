@@ -119,11 +119,7 @@ abstract class GenerativeCommand extends Command {
 
     const cancel = async () => {
       this.context.stdout.write(c`{yellow Canceled.}\n\n`)
-
-      if (options?.enableRetry)
-        process.exit(0)
-
-      await this.respond(query, cmd, { refreshCmd: true })
+      process.exit(0)
     }
 
     const run = async () => {
