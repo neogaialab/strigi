@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+### Added
+
+- Added option "Copy"
+
 ### Fixed
 
 - Added Gemini finish reason handling

@@ -8,6 +8,7 @@ Features
 - Add explanation highlighting
 - Add prefetching
 - Explain internal error with AI
+- Add config for safety
 
 ---
 Bugs
@@ -16,6 +17,8 @@ Bugs
 ---
 Enhancements
 ---
+
+- Use system instructions
 
 ---
 Documentation

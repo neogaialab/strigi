@@ -6,13 +6,14 @@ import chalk from "chalk"
 import c from "chalk-template"
 import { Command } from "clipanion"
 import ora, { type Ora } from "ora"
+import clipboardy from "clipboardy"
 import { config } from "../config"
 import { checkResponseStream } from "../services/checkResponse"
 import { explainCommandStream } from "../services/explainCommand"
 import { reviseCommandStream } from "../services/reviseCommand"
 import { getGemini } from "./gemini"
 
-type Actions = "run" | "cancel" | "explain" | "revise" | "retry"
+type Actions = "run" | "copy" | "cancel" | "explain" | "revise" | "retry"
 type Choices = Parameters<typeof select<Actions>>[0]["choices"]
 type TryAsyncCallback = (spinner: Ora) => Promise<void> | void
 interface RespondOptions {
@@ -97,17 +98,22 @@ abstract class GenerativeCommand extends Command {
         value: !options?.enableRetry ? "run" : "retry",
       },
       {
-        name: "Revise (2)",
+        name: "Copy (2)",
+        value: "copy",
+        disabled: options?.enableRetry,
+      },
+      {
+        name: "Revise (3)",
         value: "revise",
         disabled: options?.enableRetry,
       },
       {
-        name: !this.explanation ? "Explain (3)" : "Explain again (3)",
+        name: !this.explanation ? "Explain (4)" : "Explain again (4)",
         value: "explain",
         disabled: options?.enableRetry,
       },
       {
-        name: "Cancel (4)",
+        name: "Cancel (5)",
         value: "cancel",
       },
     ]
@@ -154,8 +160,16 @@ abstract class GenerativeCommand extends Command {
       this.execute()
     }
 
+    const copy = () => {
+      clipboardy.writeSync(cmd)
+
+      this.context.stdout.write(c`{green Copied to clipboard: }${cmd}\n`)
+      process.exit(0)
+    }
+
     const actions: Record<typeof action, () => Promise<void> | void> = {
       run,
+      copy,
       cancel,
       explain: () => this.explain(cmd, query),
       revise: () => this.revise(cmd, query),
