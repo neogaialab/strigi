@@ -7,9 +7,9 @@ import c from "chalk-template"
 import { Command } from "clipanion"
 import ora, { type Ora } from "ora"
 import { config } from "../config"
+import { checkResponseStream } from "../services/checkResponse"
 import { explainCommandStream } from "../services/explainCommand"
 import { reviseCommandStream } from "../services/reviseCommand"
-import { checkResponse } from "../services/checkResponse"
 import { getGemini } from "./gemini"
 
 type Actions = "run" | "cancel" | "explain" | "revise" | "retry"
@@ -41,7 +41,7 @@ abstract class GenerativeCommand extends Command {
     this.context.stdout.write(cb ? cb("\n") : "\n")
 
     for await (const chunk of stream) {
-      const chunkText = chunk.text()
+      const chunkText = checkResponseStream(chunk)
       this.context.stdout.write(cb ? cb(chunkText) : chunkText)
       text += chunkText
     }
@@ -62,8 +62,7 @@ abstract class GenerativeCommand extends Command {
     this.tryAsync(async (spinner) => {
       const result = await reviseCommandStream(query, cmd, revisePrompt, ci)
       spinner.stop()
-      const stream = await checkResponse(result)
-      const revisedCmd = await this.writeStream(stream, chunk => chalk.cyan(chunk))
+      const revisedCmd = await this.writeStream(result.stream, chunk => chalk.cyan(chunk))
 
       this.respond(query, revisedCmd, { refreshCmd: false })
     }, {
@@ -79,9 +78,8 @@ abstract class GenerativeCommand extends Command {
     await this.tryAsync(async (spinner) => {
       const result = await explainCommandStream(cmd, config.customInstructions)
       spinner.stop()
-      const stream = await checkResponse(result)
 
-      this.explanation = await this.writeStream(stream, chunk => chalk.cyan(chunk))
+      this.explanation = await this.writeStream(result.stream, chunk => chalk.cyan(chunk))
     }, {
       onError: () => {
         this.respond(query, cmd, { refreshCmd: false, enableRetry: true })

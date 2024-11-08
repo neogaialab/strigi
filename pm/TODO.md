@@ -1,7 +1,8 @@
 # TODO
 
 - [x] Handle Gemini finish reasons
-- [ ] Fix streaming
+- [x] Fix streaming
+- [ ] Exit on cancel
 - [ ] Improve general error handling
-- [ ] Exit on first cancel
 - [ ] Add action "Copy"
+- [ ] Update docs

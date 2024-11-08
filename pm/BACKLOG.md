@@ -3,7 +3,7 @@
 Features
 ---
 
-- Add revise after errors
+- Add revise and explain after errors
 - Add command highlighting
 - Add explanation highlighting
 - Add prefetching
