@@ -1,8 +1,9 @@
 import c from "chalk-template"
 import { Command } from "clipanion"
 import { config, saveConfig } from "../config"
+import StrigiCommand from "../lib/StrigiCommand"
 
-export default class LogoutCommand extends Command {
+export default class LogoutCommand extends StrigiCommand {
   static usage = Command.Usage({
     description: "Log out and remove Gemini API key.",
     details: `The \`logout\` command securely removes the Gemini API key from the configuration, enhancing access control and security measures.`,

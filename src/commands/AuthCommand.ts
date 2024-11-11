@@ -2,8 +2,9 @@ import { password } from "@inquirer/prompts"
 import c from "chalk-template"
 import { Command, Option } from "clipanion"
 import { config, saveConfig } from "../config"
+import StrigiCommand from "../lib/StrigiCommand"
 
-export default class AuthCommand extends Command {
+export default class AuthCommand extends StrigiCommand {
   static usage = Command.Usage({
     description: "Set Gemini API key and authenticate.",
     details: `The \`auth\` command facilitates authentication by saving the obtained Gemini API key in the configuration file.`,

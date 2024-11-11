@@ -10,6 +10,7 @@
 
 - Added Gemini finish reason handling
 - Implemented exit on cancel
+- Prevented the stacktrace from being printed
 
 ### Changed
 

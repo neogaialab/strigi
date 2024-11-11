@@ -3,8 +3,9 @@ import c from "chalk-template"
 import { Command } from "clipanion"
 import { config, saveConfig } from "../config"
 import type { CustomInstructions } from "../types"
+import StrigiCommand from "../lib/StrigiCommand"
 
-export default class InstructCommand extends Command {
+export default class InstructCommand extends StrigiCommand {
   static usage = Command.Usage({
     description: "Add custom instructions for tailored responses.",
     details: `The \`s instruct\` command empowers you to provide specific guidelines or preferences to the model for more tailored and accurate responses. Your custom instructions will be integrated into future interactions with the model.`,

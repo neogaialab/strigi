@@ -4,7 +4,7 @@
 - [x] Fix streaming
 - [x] Exit on cancel
 - [x] Add action "Copy"
-- [ ] Improve general error handling
+- [x] Prevent the stacktrace
 - [ ] Update docs
   - [ ] Update readme tech stack
   - [ ] Add project management files to readme

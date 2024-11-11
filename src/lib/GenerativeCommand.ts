@@ -4,7 +4,6 @@ import type { EnhancedGenerateContentResponse } from "@google/generative-ai"
 import { confirm, input, select } from "@inquirer/prompts"
 import chalk from "chalk"
 import c from "chalk-template"
-import { Command } from "clipanion"
 import ora, { type Ora } from "ora"
 import clipboardy from "clipboardy"
 import { config } from "../config"
@@ -12,6 +11,7 @@ import { checkResponseStream } from "../services/checkResponse"
 import { explainCommandStream } from "../services/explainCommand"
 import { reviseCommandStream } from "../services/reviseCommand"
 import { getGemini } from "./gemini"
+import StrigiCommand from "./StrigiCommand"
 
 type Actions = "run" | "copy" | "cancel" | "explain" | "revise" | "retry"
 type Choices = Parameters<typeof select<Actions>>[0]["choices"]
@@ -21,7 +21,7 @@ interface RespondOptions {
   enableRetry?: boolean
 }
 
-abstract class GenerativeCommand extends Command {
+abstract class GenerativeCommand extends StrigiCommand {
   explanation: string | null = null
 
   async assertGeminiKey() {
