@@ -7,4 +7,6 @@
 - [x] Prevent the stacktrace
 - [ ] Update docs
   - [x] Add links to project resources
-  - [ ] Update readme tech stack
+  - [x] Update readme tech stack
+  - [ ] Update content for v0.4.0
+  - [ ] Replace/update GIF for v0.4.0

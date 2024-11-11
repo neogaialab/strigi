@@ -67,5 +67,12 @@ Strigi extends a special thanks to the following technologies and libraries that
 - **Chalk** and **Chalk-template:** Terminal string styling with tagged template literals.
 - **Ora:** An elegant terminal spinner.
 - **TypeScript:** A strongly typed programming language that builds on JavaScript.
+- **Clipboardy**: A lightweight, cross-platform clipboard access library for seamless copying and pasting functionality.
+- **eslint**: A static code analysis tool for identifying and fixing problematic patterns in JavaScript code.
+  - **@antfu/eslint-config**: A robust set of ESLint configurations for a consistent and efficient JavaScript development experience.
+- **VitePress**: A fast static site generator powered by Vite, optimized for documentation sites.
+- **gh-pages**: A simple utility for deploying projects to GitHub Pages, enabling easy web hosting.
+- **release-it**: A tool for automating versioning, changelog generation, and release management.
+  - **@release-it/keep-a-changelog**: A plugin for automatic changelog generation, ensuring version histories remain well-documented.
 
 These technologies play a pivotal role in powering Strigi and enriching its capabilities.
