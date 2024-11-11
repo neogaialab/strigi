@@ -7,8 +7,10 @@ Features
 - Add command highlighting
 - Add explanation highlighting
 - Add prefetching
-- Explain internal error with AI
-- Add config for safety
+- Add i18n
+- Add model arg/config
+- Add safety settings args/config
+- Add generation args/config
 
 ---
 Bugs

@@ -11,7 +11,7 @@ export function getGemini() {
       throw new Error("Gemini API key not set")
 
     const genAI = new GoogleGenerativeAI(GEMINI_API_KEY)
-    gemini = genAI.getGenerativeModel({ model: "gemini-pro" })
+    gemini = genAI.getGenerativeModel({ model: "gemini-1.5-flash" })
   }
 
   return gemini

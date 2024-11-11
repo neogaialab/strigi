@@ -11,6 +11,10 @@
 - Added Gemini finish reason handling
 - Implemented exit on cancel
 
+### Changed
+
+- Updated to use Gemini 1.5 Flash
+
 ## [0.3.0] - 2024-04-16
 
 ### Added
