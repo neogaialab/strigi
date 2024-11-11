@@ -37,3 +37,7 @@ Strigi's primary focus lies on assisting users with:
 - **Basic understanding of command line interface (CLI)**: While Strigi strives to be user-friendly, some familiarity with the command line will be beneficial for interacting with the tool.
 - **Gemini API key**: Authentication using a Gemini API key is essential to unlock core functionalities within Strigi.
 - **An internet connection**: Access to an internet connection is imperative for Strigi's core functionalities, as it relies on connectivity to utilize the Gemini API.
+
+## Project Management
+
+We believe in transparent project management. If you’re curious about Strigi’s development process, upcoming features, or brainstorming sessions, we invite you to explore our approach. Visit our [Project Management section]([./CONTRIBUTING.md#project-management](https://github.com/neogaialab/strigi/blob/main/CONTRIBUTING.md#project-management)) for a closer look at how we plan, build, and evolve Strigi.

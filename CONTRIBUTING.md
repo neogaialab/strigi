@@ -7,6 +7,17 @@ Thank you for considering contributing to Strigi! We welcome contributions from 
 3. **Code Contributions:** If you're a developer and want to contribute code to the project, you can fork the repository, make your changes, and submit a pull request. Please follow our coding standards and guidelines.
 4. **Documentation Improvements:** Help us improve the project's documentation by fixing typos, adding examples, or clarifying instructions. You can edit the documentation directly on GitHub.
 5. **Sharing:** Share it with your network and help us reach more users who can benefit from it.
+6. **Project Management:** Contribute to the organization of the project
+
+## Project Management
+
+Strigi keeps track of ideas, plans, and tasks using the following resources:
+
+- **[Ideas](pm/notes/ideas.md):** A collection of brainstorming and raw ideas that need further refinement and consideration. Explore potential features and concepts to shape Strigi's future.
+- **[Backlog](BACKLOG.md):** A comprehensive list of planned features, bug reports, enhancements, and documentation tasks. Use this to stay informed on what's next for Strigi and contribute where possible.
+- **[To-Do](TODO.md):** An up-to-date list of current development tasks, including short-term goals and ongoing priorities. This is the primary reference for work in progress.
+
+Feel free to review and contribute to any of these areas as Strigi continues to evolve!
 
 ## Development
 

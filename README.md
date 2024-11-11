@@ -52,7 +52,9 @@ Or with other package managers like PNPM, Yarn, or Bun!
 
 We value and appreciate your contributions, no matter how big or small. Please refer to our [Contributing Guidelines](CONTRIBUTING.md) for detailed instructions on how to contribute to the project. Your input helps us improve and grow!
 
----
+## Project Management
+
+We believe in transparent project management. If you’re curious about Strigi’s development process, upcoming features, or brainstorming sessions, we invite you to explore our approach. Visit our [Project Management section](./CONTRIBUTING.md#project-management) for a closer look at how we plan, build, and evolve Strigi.
 
 ## Special Thanks
 
