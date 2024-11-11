@@ -7,3 +7,4 @@
 - [ ] Improve general error handling
 - [ ] Update docs
   - [ ] Update readme tech stack
+  - [ ] Add project management files to readme

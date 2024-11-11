@@ -1,5 +1,3 @@
-[Português](/README.pt-BR.md) English
-
 <table>
   <tr>
     <td>
