@@ -31,7 +31,8 @@ We use the following tools for development:
 
 - `bun run start`: Start Strigi.
 - `bun run dev`: Start Strigi in watch mode.
-- `bun run build`: Build Strigi for production with minification and sourcemaps.
 - `bun run lint`: Lint the codebase.
 - `bun run lint --fix`: Automatically fix linting issues.
+- `bun run build`: Build Strigi for production with minification and sourcemaps.
+- `bun link`: Links your package globally for local testing. You can run the CLI command ($ s) as if it were installed globally without publishing it.
 - `bun run release`: Release new version.
