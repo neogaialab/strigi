@@ -25,7 +25,7 @@ Feel free to review and contribute to any of these areas as Strigi continues to 
 
 We use the following tools for development:
 
-- [Bun](https://bun.sh/) - Bun is a fast JavaScript all-in-one toolkit.
+- [Bun 1.1.34 or higher](https://bun.sh/) - Bun is a fast JavaScript all-in-one toolkit.
 
 ### Scripts
 
