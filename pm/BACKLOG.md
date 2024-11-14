@@ -12,6 +12,8 @@ Features
 Bugs
 ---
 
+- Fix long response printing
+
 ---
 Enhancements
 ---
