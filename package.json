@@ -1,7 +1,7 @@
 {
   "name": "strigi",
   "type": "module",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "CLI command assistant leveraging GenAI to generate and explain commands using natural language.",
   "author": "Luis Emidio",
   "license": "MIT",
