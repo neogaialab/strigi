@@ -8,21 +8,24 @@ export default defineConfig({
   themeConfig: {
     nav: [
       { text: "Home", link: "/" },
-      { text: "Docs", link: "/overview/introduction" },
+      { text: "Docs", link: "/about/introduction" },
       {
         text: "About",
         items: [
-          { text: "Introduction", link: "/overview/introduction" },
+          { text: "Introduction", link: "/about/introduction" },
           { text: "Changelog", link: "https://github.com/neogaialab/strigi/blob/main/CHANGELOG.md" },
+          { text: "Roadmap", link: "https://github.com/neogaialab/strigi/blob/main/CONTRIBUTING.md#project-management" },
           { text: "Contributing Guide", link: "https://github.com/neogaialab/strigi/blob/main/CONTRIBUTING.md" },
         ],
       },
     ],
     sidebar: [
       {
-        text: "Overview",
+        text: "About",
         items: [
-          { text: "Introduction", link: "/overview/introduction" },
+          { text: "Introduction", link: "/about/introduction" },
+          { text: "Roadmap", link: "/about/roadmap" },
+          { text: "Open Source", link: "/about/open-source" },
         ],
       },
       {

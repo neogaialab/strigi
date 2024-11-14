@@ -8,7 +8,7 @@ hero:
   actions:
     - theme: brand
       text: Get Started
-      link: /overview/introduction
+      link: /about/introduction
     - theme: alt
       text: GitHub
       link: https://github.com/neogaialab/strigi
