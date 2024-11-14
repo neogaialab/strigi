@@ -81,6 +81,8 @@ abstract class GenerativeCommand extends StrigiCommand {
       spinner.stop()
 
       this.explanation = await this.writeStream(result.stream, chunk => chalk.cyan(chunk))
+
+      this.respond(query, cmd)
     }, {
       onError: () => {
         this.respond(query, cmd, { refreshCmd: false, enableRetry: true })
