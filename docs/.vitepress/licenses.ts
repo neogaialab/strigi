@@ -33,7 +33,7 @@ async function getPackagesInfo(dependencies, type) {
       // Accumulate package details
       content += `- ${packageName} (${version})\n`
       content += `  - License: ${license}\n`
-      content += `  - Repository: ${repositoryUrl}\n\n`
+      content += `  - Repository: ${repositoryUrl}\n`
 
       // eslint-disable-next-line no-console
       console.log(`Fetched info for ${packageName}`)
@@ -61,6 +61,9 @@ async function main() {
 
     if (packageJson.devDependencies)
       markdownContent += await getPackagesInfo(packageJson.devDependencies, "Development")
+
+    if (packageJson.peerDependencies)
+      markdownContent += await getPackagesInfo(packageJson.peerDependencies, "Peer")
 
     // Write the content to the file
     await fs.writeFile(DEST, markdownContent)

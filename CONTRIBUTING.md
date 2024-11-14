@@ -29,10 +29,15 @@ We use the following tools for development:
 
 ### Scripts
 
-- `bun run start`: Start Strigi.
-- `bun run dev`: Start Strigi in watch mode.
-- `bun run lint`: Lint the codebase.
-- `bun run lint --fix`: Automatically fix linting issues.
-- `bun run build`: Build Strigi for production with minification and sourcemaps.
-- `bun link`: Links your package globally for local testing. You can run the CLI command ($ s) as if it were installed globally without publishing it.
-- `bun run release`: Release new version.
+- **`bun run start`**: Launch Strigi in its default mode.
+- **`bun run dev`**: Start Strigi in watch mode, automatically rebuilding on file changes.
+- **`bun run lint`**: Lint the codebase to identify potential issues and enforce coding standards.
+- **`bun run lint --fix`**: Automatically fix fixable linting issues.
+- **`bun run build`**: Build Strigi for production, including minification and sourcemaps for optimized performance.
+- **`bun link`**: Link your local package globally for testing. Run the CLI commands as if the package were installed globally without needing to publish it.
+- **`bun run docs:dev`**: Start the documentation site in development mode, with live-reloading for changes.
+- **`bun run docs:build`**: Build the documentation site for production, optimizing for deployment.
+- **`bun run docs:preview`**: Preview the built documentation site locally before deployment.
+- **`bun run docs:deploy`**: Deploy the built documentation to your chosen hosting platform.
+- **`bun run docs:licenses`**: Generate the `/about/open-source.md` file, listing open-source licenses used in the project.
+- **`bun run release`**: Create a new release version, including necessary versioning and packaging tasks.
