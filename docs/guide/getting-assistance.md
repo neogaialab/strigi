@@ -17,6 +17,7 @@ Strigi excels at understanding natural language. Here's how to leverage this to 
 4. **Choose your action**: Once you have the generated command, you're in control! Here are your options:
 
   - **Run**: Execute your command by selecting this option, pressing `Enter`, confirming again, and  witnessing the results in your terminal.
+  - **Copy**: Save the generated command to your clipboard for easy pasting elsewhere. Select this option, press `Enter`, and the command will be copied for you to use in any context you need.
   - **Revise**: Ensure precision by reviewing and modifying the generated command. Select this option, press `Enter`, and enter your revise prompt.
   - **Explain**: Gain insights into a command's purpose and usage. Select this option, press `Enter`, and delve deeper into its functionality.
   - **Cancel**: Opt out of the current action by selecting this option and pressing `Enter`. Alternatively, terminate the interaction pressing `Ctrl+C`.
