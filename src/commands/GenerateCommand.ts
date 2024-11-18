@@ -1,6 +1,5 @@
 import chalk from "chalk"
 import { Command, Option } from "clipanion"
-import type { EnhancedGenerateContentResponse } from "@google/generative-ai"
 import { config } from "../config"
 import GenerativeCommand from "../lib/GenerativeCommand"
 import { checkResponse } from "../services/checkResponse"
