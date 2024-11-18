@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+### Changed
+
+- Upgraded `@google/generative-ai` to version `0.21.0`
+
 ## [0.4.0] - 2024-11-14
 
 ### Added
