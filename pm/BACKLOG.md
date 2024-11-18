@@ -7,6 +7,8 @@ Features
 - Add command highlighting
 - Add explanation highlighting
 - Add i18n
+- Add arg/config to disable streaming
+- Add arg/config for other models
 
 ---
 Bugs
@@ -17,8 +19,6 @@ Bugs
 ---
 Enhancements
 ---
-
-- Use system instructions
 
 ---
 Documentation
