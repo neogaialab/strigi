@@ -7,7 +7,7 @@ import c from "chalk-template"
 import ora, { type Ora } from "ora"
 import clipboardy from "clipboardy"
 import { config } from "../config"
-import { checkResponseStream } from "../services/checkResponse"
+import { checkResponse, checkResponseStream } from "../services/checkResponse"
 import { explainCommandStream } from "../services/explainCommand"
 import { reviseCommandStream } from "../services/reviseCommand"
 import { getGemini } from "./gemini"
@@ -47,7 +47,7 @@ abstract class GenerativeCommand extends StrigiCommand {
       text += chunkText
     }
 
-    this.context.stdout.write(cb ? cb("\n\n") : "\n\n")
+    this.context.stdout.write(cb ? cb("\n") : "\n")
 
     return text
   }
@@ -64,6 +64,7 @@ abstract class GenerativeCommand extends StrigiCommand {
       const result = await reviseCommandStream(query, cmd, revisePrompt, ci)
       spinner.stop()
       const revisedCmd = await this.writeStream(result.stream, chunk => chalk.cyan(chunk))
+      await checkResponse(await result.response)
 
       this.respond(query, revisedCmd, { refreshCmd: false })
     }, {
@@ -80,7 +81,10 @@ abstract class GenerativeCommand extends StrigiCommand {
       const result = await explainCommandStream(cmd, config.customInstructions)
       spinner.stop()
 
-      this.explanation = await this.writeStream(result.stream, chunk => chalk.cyan(chunk))
+      this.explanation = ""
+      const explanation = await this.writeStream(result.stream, chunk => chalk.cyan(chunk))
+      checkResponse(await result.response)
+      this.explanation = explanation
 
       this.respond(query, cmd)
     }, {
@@ -92,7 +96,7 @@ abstract class GenerativeCommand extends StrigiCommand {
 
   async respond(query: string, cmd: string, options?: RespondOptions) {
     if (options?.refreshCmd)
-      this.context.stdout.write(chalk.cyan(`${cmd}\n\n`))
+      this.context.stdout.write(chalk.cyan(`\n${cmd}\n`))
 
     const choices: Choices = [
       {

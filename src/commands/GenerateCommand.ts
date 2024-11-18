@@ -1,9 +1,10 @@
 import chalk from "chalk"
 import { Command, Option } from "clipanion"
+import type { EnhancedGenerateContentResponse } from "@google/generative-ai"
 import { config } from "../config"
 import GenerativeCommand from "../lib/GenerativeCommand"
 import { checkResponse } from "../services/checkResponse"
-import { generateCommandStream } from "../services/generateCommand"
+import { generateCommand } from "../services/generateCommand"
 
 export default class GenerateCommand extends GenerativeCommand {
   static usage = Command.Usage({
@@ -27,11 +28,11 @@ export default class GenerateCommand extends GenerativeCommand {
     const ci = config.customInstructions
 
     this.tryAsync(async (spinner) => {
-      const result = await generateCommandStream(query, ci)
+      const result = await generateCommand(query, ci)
       spinner.stop()
-      const stream = await checkResponse(result)
 
-      const cmd = await this.writeStream(stream, chunk => chalk.cyan(chunk))
+      const cmd = await this.writeStream(result.stream, chunk => chalk.cyan(chunk))
+      checkResponse(await result.response)
 
       this.respond(query, cmd)
     }, {

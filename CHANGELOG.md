@@ -2,6 +2,12 @@
 
 ## [Unreleased]
 
+### Fixed
+
+- Resolved an issue where an unnecessary linebreak appeared after printing commands
+- Added finish reason validation for `revise` and `explain` command responses
+- Ensured proper handling of cases where the finish reason is missing
+
 ### Changed
 
 - Upgraded `@google/generative-ai` to version `0.21.0`
