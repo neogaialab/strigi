@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## [0.4.1] - 2024-11-18
+
 ### Fixed
 
 - Resolved an issue where an unnecessary linebreak appeared after printing commands
