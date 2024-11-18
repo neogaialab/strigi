@@ -8,28 +8,33 @@ export async function reviseCommandStream(
   revise: string,
   ci?: CustomInstructions,
 ) {
-  const gemini = getGemini()
+  let systemInstructions = `You are a CLI command generator. You are expected to revise a command that you have generated based on user query and user's information, but now with a new input (Revise Prompt). Don't give an explanation for the command.
 
-  let prompt = `
-    You are a CLI command generator. You are expected to revise a command that you have generated based on user query and user's information, but now with a new input (Revise Prompt). It is important to only generate the command without explanation.
-
-  `
-
-  prompt += `
-    ## About the user
-
-    OS Platform: ${process.platform}
-  `
+## About the user
+    
+OS Platform: ${process.platform}
+`
 
   if (ci?.aboutMe) {
-    prompt += `
+    systemInstructions += `
     ${ci.aboutMe}
-  `
+    `
   }
 
-  prompt += `
-    ## Initial Query
+  systemInstructions += `
+  ## Output Criteria
+    
+  - A complete valid CLI command
+  - A complete plain text
+  
+  ## Output Example
+  
+  git commit --amend
+  `
 
+  const prompt = `
+    ## Initial Query
+    
     ${query}
 
     ## Proposed Command
@@ -37,19 +42,11 @@ export async function reviseCommandStream(
     ${cmd}
 
     ## Revise Prompt
-
+    
     ${revise}
-
-    ## Output Criteria
-
-    - A complete valid CLI command
-    - A complete plain text
-
-    ## Output Example
-
-    git commit --amend
   `
 
+  const gemini = getGemini(systemInstructions)
   const result = await gemini.generateContentStream(prompt)
   return result
 }

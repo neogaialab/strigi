@@ -6,37 +6,9 @@ export async function explainCommandStream(
   cmd: string,
   ci?: CustomInstructions,
 ) {
-  const gemini = getGemini()
-
-  let prompt = `
+  let systemInstructions = `
     You are a CLI command generator. You are expected to explain a command based on user's query and information. Additionally, you should adapt your explanation based on the user's response preference.
     
-  `
-  prompt += `
-    ## About the user
-
-    OS Platform: ${process.platform}
-  `
-
-  if (ci?.aboutMe) {
-    prompt += `
-    ${ci.aboutMe}
-  `
-  }
-
-  if (ci?.responsePreference) {
-    prompt += `
-    ## How would the user like you to respond
-    
-    ${ci.responsePreference}
-  `
-  }
-
-  prompt += `
-    ## Command
-
-    ${cmd}
-
     ## Output Criteria
 
     - A complete plain text
@@ -44,6 +16,33 @@ export async function explainCommandStream(
     ## Output Example
 
     \`ls\` is a command used to list files in the current directory. It can be used with various options to specify how the files are listed, such as \`-a\` to show hidden files or \`-l\` to show detailed information about each file.
+  `
+  systemInstructions += `
+  ## About the user
+  
+  OS Platform: ${process.platform}
+  `
+
+  if (ci?.aboutMe) {
+    systemInstructions += `
+    ${ci.aboutMe}
+    `
+  }
+
+  if (ci?.responsePreference) {
+    systemInstructions += `
+    ## How would the user like you to respond
+    
+    ${ci.responsePreference}
+    `
+  }
+
+  const gemini = getGemini(systemInstructions)
+
+  const prompt = `
+  ## Command
+  
+  ${cmd}
   `
 
   const result = await gemini.generateContentStream(prompt)

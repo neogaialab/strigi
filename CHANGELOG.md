@@ -11,6 +11,8 @@
 ### Changed
 
 - Upgraded `@google/generative-ai` to version `0.21.0`
+- Reimplemented prompts to utilize system instructions for better consistency and performance
+- Enhanced prompting for clarity and efficiency
 
 ## [0.4.0] - 2024-11-14
 

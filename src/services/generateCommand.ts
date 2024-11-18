@@ -2,44 +2,41 @@ import process from "node:process"
 import { getGemini } from "../lib/gemini"
 import type { CustomInstructions } from "../types"
 
-export async function generateCommandStream(
+export async function generateCommand(
   query: string,
   ci?: CustomInstructions,
 ) {
-  const gemini = getGemini()
+  const systemInstruction = `You are a CLI command generator. You receive a query and respond with a valid CLI command based on that query and user information. Don't give an explanation for the command.
 
-  let prompt = `
-    You are a CLI command generator. You are expected to generate a command based on user's query and information. It is important to only generate the command without explanation.
-
-    ## Input
-
-    ${query}
-
+  You have to generate a command for workstation OS platform: ${process.platform}
+  
+Your response must be plain text. For example:
+  
+git commit --amend
   `
 
-  prompt += `
-    ## About the user
+  const gemini = getGemini(systemInstruction)
 
-    OS Platform: ${process.platform}
-  `
+  let prompt = ``
 
   if (ci?.aboutMe) {
-    prompt += `
+    prompt += `Here is some information about me:
+
+    ## About Me
+
     ${ci.aboutMe}
-  `
+    `
   }
 
   prompt += `
-    ## Output Criteria
+    ---
 
-    - A complete valid CLI command
-    - A complete plain text
+    Here is the query you need to generate a command for:
+    
+    ## Query
 
-    ## Output Example
-
-    git commit --amend
+    ${query}
   `
 
-  const result = await gemini.generateContentStream(prompt)
-  return result
+  return gemini.generateContentStream(prompt)
 }
