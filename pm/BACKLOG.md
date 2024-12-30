@@ -3,6 +3,8 @@
 Features
 ---
 
+- Read GEMINI_API_KEY from .env and
+  - Add option to pass the env file
 - Add revise and explain after errors
 - Add command highlighting
 - Add explanation highlighting
