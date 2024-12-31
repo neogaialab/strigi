@@ -16,6 +16,7 @@ Features
 Bugs
 ---
 
+- Go back to menu after canceling run
 - Fix long response printing
 
 ---
